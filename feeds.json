@@ -1,0 +1,27 @@
+{
+  "feeds": [
+    {
+      "name": "Виноградная Лоза",
+      "url": "https://vinograd.info/rss.xml",
+      "enabled": true
+    },
+    {
+      "name": "Wine Spectator",
+      "url": "https://www.winespectator.com/rss/articles",
+      "enabled": true
+    },
+    {
+      "name": "Decanter",
+      "url": "https://www.decanter.com/feed",
+      "enabled": true
+    },
+    {
+      "name": "Виноделие и Виноградарство",
+      "url": "https://vinmoldova.md/feed/",
+      "enabled": false
+    }
+  ],
+  "max_items_per_run": 1,
+  "min_age_hours": 2,
+  "max_age_days": 7
+}

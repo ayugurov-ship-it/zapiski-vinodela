@@ -1,0 +1,39 @@
+name: Publish RSS Digest
+
+on:
+  schedule:
+    # Каждый день в 14:00 UTC (17:00 MSK)
+    - cron: '0 14 * * *'
+  workflow_dispatch:
+
+jobs:
+  publish-rss:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Publish RSS digest
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python scripts/rss_publish.py
+
+      - name: Commit published state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add published_rss.json
+          git diff --staged --quiet || git commit -m "Update RSS published list"
+          git push
